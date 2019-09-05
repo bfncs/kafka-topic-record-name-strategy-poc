@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "CookieBaked",
+  "namespace": "us.byteb.avro",
+  "fields": [
+    {
+      "name": "cookieId",
+      "type": "string"
+    },
+    {
+      "name": "cookieBaker",
+      "type": "string"
+    }
+  ]
+}

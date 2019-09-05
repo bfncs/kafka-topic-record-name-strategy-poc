@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>us.byteb</groupId>
+  <artifactId>kafka-topicrecordnamestrategy-playground</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <avro.version>1.8.2</avro.version>
+    <confluent.version>5.2.1</confluent.version>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>confluent</id>
+      <url>http://packages.confluent.io/maven/</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.confluent</groupId>
+      <artifactId>kafka-avro-serializer</artifactId>
+      <version>${confluent.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>avro</artifactId>
+      <groupId>org.apache.avro</groupId>
+      <version>${avro.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <compilerArgs>
+            <arg>-Xlint:all</arg>
+          </compilerArgs>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <inherited>true</inherited>
+        <version>3.3</version>
+      </plugin>
+      <plugin>
+        <artifactId>avro-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <configuration>
+              <outputDirectory>${project.basedir}/target/generated-sources/avro</outputDirectory>
+              <sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
+            </configuration>
+            <goals>
+              <goal>schema</goal>
+            </goals>
+            <phase>generate-sources</phase>
+          </execution>
+        </executions>
+        <groupId>org.apache.avro</groupId>
+        <version>${avro.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

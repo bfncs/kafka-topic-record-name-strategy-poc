@@ -1,0 +1,16 @@
+{
+
+  "type": "record",
+  "name": "CookieEaten",
+  "namespace": "us.byteb.avro",
+  "fields": [
+    {
+      "name": "cookieId",
+      "type": "string"
+    },
+    {
+      "name": "cookieEater",
+      "type": "string"
+    }
+  ]
+}
