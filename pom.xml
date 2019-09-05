@@ -69,6 +69,69 @@
         <groupId>org.apache.avro</groupId>
         <version>${avro.version}</version>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.1</version>
+        <executions>
+          <execution>
+            <id>producer-app</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>us.byteb.playground.kafka.topicrecordnamestrategy.ProducerApp</mainClass>
+                </transformer>
+              </transformers>
+              <finalName>producer-app</finalName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>consumer-app</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>us.byteb.playground.kafka.topicrecordnamestrategy.ConsumerApp</mainClass>
+                </transformer>
+              </transformers>
+              <finalName>consumer-app</finalName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>us.byteb.playground.kafka.topicrecordnamestrategy.ConsumerApp</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <id>make-assembly</id>
+            <phase>package</phase>
+          </execution>
+        </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.1.0</version>
+      </plugin>
     </plugins>
   </build>
 
