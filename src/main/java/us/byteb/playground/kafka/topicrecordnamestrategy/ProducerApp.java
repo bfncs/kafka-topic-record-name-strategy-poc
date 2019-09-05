@@ -1,8 +1,16 @@
 package us.byteb.playground.kafka.topicrecordnamestrategy;
 
+import static io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
+import static io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig.VALUE_SUBJECT_NAME_STRATEGY;
 import static java.text.MessageFormat.format;
+import static org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG;
+import static org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG;
+import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG;
+import static us.byteb.playground.kafka.topicrecordnamestrategy.Config.BOOTSTRAP_SERVERS;
+import static us.byteb.playground.kafka.topicrecordnamestrategy.Config.SCHEMA_REGISTRY_URL;
 
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -18,20 +26,18 @@ public class ProducerApp {
 
   public static void main(String[] args) throws InterruptedException {
     Properties props = new Properties();
-    props.setProperty("bootstrap.servers", "localhost:9092");
-    props.put("key.serializer", StringSerializer.class.getName());
-    props.put("value.serializer", KafkaAvroSerializer.class.getName());
-    props.put("schema.registry.url", "http://localhost:8081");
-    props.put("value.subject.name.strategy", io.confluent.kafka.serializers.subject.TopicRecordNameStrategy.class.getName());
+    props.setProperty(BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
+    props.put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+    props.put(VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class.getName());
+    props.put(SCHEMA_REGISTRY_URL_CONFIG, SCHEMA_REGISTRY_URL);
+    props.put(VALUE_SUBJECT_NAME_STRATEGY, TopicRecordNameStrategy.class.getName());
 
     final Random random = new Random();
 
     int counter = 0;
     final List<Integer> cookieIdList = new ArrayList<>();
 
-
     try (KafkaProducer<String, SpecificRecord> producer = new KafkaProducer<>(props)) {
-
 
       while (true) {
         final long interval = (long) (5L * Math.random());
