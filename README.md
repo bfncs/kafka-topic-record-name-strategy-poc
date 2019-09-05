@@ -1,6 +1,6 @@
 # Kafka `TopicRecordNameStrategy` proof of concept
 
-This repo contains a proof of concept using `TopicRecordNameStrategy` in Kafka Java Producer and Consumer API.
+This repo contains a proof of concept using the subject name strategy setting `TopicRecordNameStrategy` (see [documentation](https://docs.confluent.io/current/schema-registry/serializer-formatter.html#subject-name-strategy)) in Kafka Java Producer and Consumer API.
 
 ## Build
 
